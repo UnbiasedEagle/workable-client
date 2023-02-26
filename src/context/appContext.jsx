@@ -42,6 +42,7 @@ const initialState = {
   alertText: '',
   alertType: '',
   user: null,
+  token: localStorage.getItem('token') ? localStorage.getItem('token') : null,
   userLocation: '',
   showSidebar: false,
   isEditing: false,
@@ -74,6 +75,9 @@ const AppProvider = ({ children }) => {
 
   const authFetch = axios.create({
     baseURL: 'https://odd-moth-tunic.cyclic.app/api/v1',
+    headers: {
+      Authorization: `Bearer ${state.token}`,
+    },
   });
 
   authFetch.interceptors.response.use(
@@ -105,10 +109,10 @@ const AppProvider = ({ children }) => {
         `https://odd-moth-tunic.cyclic.app/api/v1/auth/register`,
         currentUser
       );
-      const { user, location } = response.data;
+      const { user, location, token } = response.data;
       dispatch({
         type: REGISTER_USER_SUCCESS,
-        payload: { user, location },
+        payload: { user, location, token },
       });
     } catch (error) {
       dispatch({
@@ -126,10 +130,10 @@ const AppProvider = ({ children }) => {
         `https://odd-moth-tunic.cyclic.app/api/v1/auth/login`,
         currentUser
       );
-      const { user, location } = response.data;
+      const { user, location, token } = response.data;
       dispatch({
         type: LOGIN_USER_SUCCESS,
-        payload: { user, location },
+        payload: { user, location, token },
       });
     } catch (error) {
       dispatch({

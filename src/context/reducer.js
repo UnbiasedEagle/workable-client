@@ -59,6 +59,7 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === REGISTER_USER_SUCCESS) {
+    localStorage.setItem('token', action.payload.token);
     return {
       ...state,
       isLoading: false,
@@ -87,6 +88,7 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === LOGIN_USER_SUCCESS) {
+    localStorage.setItem('token', action.payload.token);
     return {
       ...state,
       isLoading: false,
