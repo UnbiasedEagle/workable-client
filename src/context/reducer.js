@@ -142,10 +142,12 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === LOGOUT_USER) {
+    localStorage.removeItem('token');
     return {
       ...initialState,
       userLoading: false,
       user: null,
+      token: null,
     };
   }
 
